@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>USJ 하루 공략</title>
+<meta name="description" content="오사카 유니버설 스튜디오 재팬 하루 공략: 저렴한 티켓, 줄 줄이기, 슈퍼 닌텐도 월드 동선을 지도로 따라가는 인터랙티브 가이드">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --bg:#f6f4ef; --card:#ffffff; --ink:#1d1d1f; --sub:#6b6b70; --line:#e4e1d8;
+  --accent:#e2231a; --accent2:#0b5ed7; --ok:#1a8f4c; --water:#cfe6f5; --route:#e2231a;
+  --shadow:0 2px 10px rgba(0,0,0,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141416; --card:#1f1f23; --ink:#f2f2f4; --sub:#a0a0a8; --line:#33333a;
+    --water:#1d3448; --shadow:0 2px 10px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141416; --card:#1f1f23; --ink:#f2f2f4; --sub:#a0a0a8; --line:#33333a;
+  --water:#1d3448; --shadow:0 2px 10px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px 80px}
+header.top{padding:22px 16px 10px;max-width:1100px;margin:0 auto}
+header.top h1{margin:0;font-size:26px;letter-spacing:-.02em}
+header.top h1 span{color:var(--accent)}
+header.top p{margin:4px 0 0;color:var(--sub);font-size:14px}
+nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+nav.tabs .in{max-width:1100px;margin:0 auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+nav.tabs button{flex:0 0 auto;border:0;background:transparent;color:var(--sub);font:inherit;font-weight:600;font-size:15px;padding:8px 14px;border-radius:999px;cursor:pointer}
+nav.tabs button.on{background:var(--ink);color:var(--bg)}
+section.pane{display:none;padding-top:18px}
+section.pane.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
+.card h2{margin:0 0 8px;font-size:19px}
+.card h3{margin:14px 0 6px;font-size:16px}
+.sub{color:var(--sub);font-size:14px}
+.grid{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:880px){.grid.route{grid-template-columns:1.05fr .95fr}}
+/* map */
+.mapbox{position:relative}
+svg.map{width:100%;height:auto;display:block;touch-action:manipulation}
+.area rect,.area path{stroke:var(--card);stroke-width:2;cursor:pointer;transition:opacity .2s, filter .2s}
+.area text{font-size:11px;font-weight:700;fill:#fff;pointer-events:none;text-anchor:middle}
+.area.dim rect{opacity:.35}
+.area.hit rect{filter:drop-shadow(0 0 6px rgba(0,0,0,.35));opacity:1}
+.area.hit rect{stroke:var(--ink);stroke-width:3}
+.route{fill:none;stroke:var(--route);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:7 6;animation:dash 1.2s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-26}}
+.pin{fill:var(--accent);stroke:#fff;stroke-width:2}
+.pinpulse{fill:var(--accent);opacity:.25;animation:pulse 1.6s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{0%{transform:scale(.6);opacity:.5}100%{transform:scale(2.2);opacity:0}}
+.legend{font-size:12px;color:var(--sub);margin-top:6px}
+/* stepper */
+.now{display:flex;gap:12px;align-items:flex-start}
+.badge{flex:0 0 auto;background:var(--accent);color:#fff;font-weight:800;border-radius:12px;padding:6px 10px;font-size:14px}
+.now h3{margin:0;font-size:18px}
+.now .time{color:var(--accent);font-weight:700;font-size:13px}
+.tip{background:color-mix(in srgb,var(--accent2) 10%,transparent);border-left:3px solid var(--accent2);padding:8px 10px;border-radius:8px;font-size:14px;margin-top:10px}
+.ctrl{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;padding:10px 14px;border-radius:12px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.okb{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn:disabled{opacity:.4;cursor:default}
+ol.steps{list-style:none;margin:0;padding:0}
+ol.steps li{display:flex;gap:10px;align-items:center;padding:10px 6px;border-bottom:1px solid var(--line);cursor:pointer;border-radius:10px}
+ol.steps li:last-child{border-bottom:0}
+ol.steps li.cur{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+ol.steps li .n{flex:0 0 28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:800;background:var(--line);color:var(--ink)}
+ol.steps li.done .n{background:var(--ok);color:#fff}
+ol.steps li.done .t{text-decoration:line-through;color:var(--sub)}
+ol.steps li .t{flex:1;font-weight:600;font-size:15px}
+ol.steps li .tm{font-size:12px;color:var(--sub);white-space:nowrap}
+.phase{font-size:12px;font-weight:800;color:var(--sub);letter-spacing:.08em;margin:12px 6px 2px}
+.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0 4px}
+.progress i{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
+/* tables & lists */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--sub);font-weight:600;font-size:13px}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--line)}
+.pill.r{background:var(--accent);color:#fff}
+.pill.g{background:var(--ok);color:#fff}
+ul.clean{margin:6px 0 0;padding-left:18px}
+ul.clean li{margin:4px 0}
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.calc label{font-size:13px;color:var(--sub);display:block}
+.calc input{width:100%;font:inherit;font-size:16px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.total{font-size:28px;font-weight:800;margin-top:10px}
+.total small{font-size:14px;color:var(--sub);font-weight:600}
+.chk label{display:flex;gap:10px;align-items:flex-start;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.chk input{width:20px;height:20px;margin-top:2px;accent-color:var(--ok);flex:0 0 auto}
+.vs{display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:700px){.vs{grid-template-columns:1fr 1fr}}
+.vs .card{margin:0}
+footer{color:var(--sub);font-size:12px;text-align:center;padding:24px 16px}
+footer a,.card a{color:var(--accent2)}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>USJ <span>하루 공략</span> 가이드</h1>
+  <p>저렴하게 · 줄은 짧게 · 슈퍼 닌텐도 월드부터 · 2026년 10월 기준</p>
+</header>
+
+<nav class="tabs"><div class="in">
+  <button data-tab="route" class="on">🗺️ 동선</button>
+  <button data-tab="ticket">🎟️ 티켓·예산</button>
+  <button data-tab="queue">⏱️ 줄 줄이기</button>
+  <button data-tab="check">✅ 준비물</button>
+</div></nav>
+
+<main class="wrap">
+
+<!-- ROUTE -->
+<section class="pane on" id="route">
+  <div class="grid route">
+    <div class="card mapbox">
+      <h2>파크 개략도</h2>
+      <div class="sub" style="margin-bottom:8px">구역을 누르면 해당 단계로 이동합니다. 빨간 점선이 지금까지의 동선입니다.</div>
+      <svg class="map" id="map" viewBox="0 0 400 485" role="img" aria-label="USJ 구역 개략도">
+        <rect x="0" y="0" width="400" height="485" rx="18" fill="var(--bg)"/>
+        <ellipse cx="205" cy="240" rx="82" ry="72" fill="var(--water)"/>
+        <text x="205" y="244" text-anchor="middle" font-size="12" fill="var(--sub)" font-weight="700">라군</text>
+        <g id="areas"></g>
+        <path id="routeLine" class="route" d=""/>
+        <g id="pinG"><circle class="pinpulse" r="9"/><circle class="pin" r="7"/></g>
+      </svg>
+      <div class="legend">※ 이해를 돕기 위한 개략도로, 실제 위치·거리와 다릅니다. 현장에서는 공식 USJ 앱 지도를 함께 보세요.</div>
+    </div>
+
+    <div>
+      <div class="card">
+        <div class="now">
+          <div class="badge" id="nowN">1</div>
+          <div style="flex:1">
+            <div class="time" id="nowTime"></div>
+            <h3 id="nowTitle"></h3>
+            <div class="sub" id="nowArea"></div>
+          </div>
+        </div>
+        <p id="nowDesc" style="margin:10px 0 0"></p>
+        <div class="tip" id="nowTip"></div>
+        <div class="ctrl">
+          <button class="btn" id="prevB">◀ 이전</button>
+          <button class="btn okb" id="doneB">✓ 완료</button>
+          <button class="btn pri" id="nextB">다음 ▶</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2 style="display:flex;justify-content:space-between;align-items:center">전체 일정 <button class="btn" id="resetB" style="font-size:13px;padding:6px 10px">초기화</button></h2>
+        <div class="progress"><i id="prog"></i></div>
+        <div class="sub" id="progT"></div>
+        <ol class="steps" id="steps"></ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📍 파크까지 가기</h2>
+    <p class="sub" style="margin:0 0 10px">JR 유니버설시티역에서 걸어서 약 5분. 오픈런을 노린다면 파크 앞 호텔 숙박이 가장 편합니다.</p>
+    <div class="ctrl" style="margin-top:0">
+      <a class="btn pri" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Universal+Studios+Japan&travelmode=transit">구글 지도 길찾기</a>
+      <a class="btn" target="_blank" rel="noopener" href="https://www.usj.co.jp/web/ko/kr/">USJ 공식 사이트</a>
+    </div>
+  </div>
+</section>
+
+<!-- TICKET -->
+<section class="pane" id="ticket">
+  <div class="card">
+    <h2>가장 저렴하게 입장하는 법</h2>
+    <ul class="clean">
+      <li><b>날짜가 가격을 정합니다.</b> 날짜별 변동 요금제로, 한산한 평일이 쌉니다. 주말이 평일보다 싼 날도 있고 연휴는 비쌉니다.</li>
+      <li><b>새 최저가 8,400엔.</b> 2026년 9월 1일 입장분부터 성인 1데이 최저 구간이 기존보다 500엔 내려갔습니다.</li>
+      <li><b>날짜를 정하면 바로 구매.</b> 판매 후에도 수요에 따라 가격이 다시 조정됩니다. 산 뒤에 가격이 올라도 차액은 내지 않습니다.</li>
+      <li><b>오후만 놀 거라면</b> 15시 입장 트와일라잇 패스(어른 5,900엔~)가 약 2,000엔 저렴합니다. 재입장·환불은 불가.</li>
+    </ul>
+    <h3>티켓 종류 한눈에</h3>
+    <table>
+      <tr><th>종류</th><th>성인 가격</th><th>메모</th></tr>
+      <tr><td>1데이 스튜디오 패스</td><td>8,400엔~</td><td>입장권 (필수)</td></tr>
+      <tr><td>트와일라잇 패스</td><td>5,900엔~</td><td>15시부터 입장</td></tr>
+      <tr><td>익스프레스 패스</td><td>약 7,000~25,000엔</td><td>입장권 별도, 지정 어트랙션 줄 단축</td></tr>
+      <tr><td>닌텐도 월드 정리권 (앱)</td><td><span class="pill g">무료</span></td><td>입장 후 앱에서 선착순</td></tr>
+    </table>
+    <p class="sub" style="margin-bottom:0">가격은 날짜별로 다르니 구매 전 공식 사이트 가격 캘린더에서 확인하세요.</p>
+  </div>
+
+  <div class="card">
+    <h2>🧮 예산 계산기</h2>
+    <div class="calc">
+      <div><label>인원</label><input type="number" id="cPeople" value="1" min="1"></div>
+      <div><label>입장권 (1인, 엔)</label><input type="number" id="cTicket" value="8400" step="100"></div>
+      <div><label>익스프레스 (1인, 엔)</label><input type="number" id="cExpress" value="0" step="100"></div>
+      <div><label>식비 (1인, 엔)</label><input type="number" id="cFood" value="4000" step="100"></div>
+      <div><label>기념품·기타 (1인, 엔)</label><input type="number" id="cEtc" value="3000" step="100"></div>
+      <div><label>환율 (100엔당 원, 직접 입력)</label><input type="number" id="cRate" value="" placeholder="예: 920"></div>
+    </div>
+    <div class="total" id="cTotal"></div>
+    <div class="sub" id="cKrw"></div>
+  </div>
+</section>
+
+<!-- QUEUE -->
+<section class="pane" id="queue">
+  <div class="card">
+    <h2>"줄 0분"은 익스프레스, "최저가"는 오픈런</h2>
+    <p class="sub" style="margin:0">돈과 대기 시간 중 무엇을 아낄지 먼저 정하세요. 한산한 평일이면 A만으로도 충분히 많이 탑니다.</p>
+  </div>
+  <div class="vs">
+    <div class="card">
+      <span class="pill g">A · 절약형</span>
+      <h2 style="margin-top:8px">익스프레스 없이</h2>
+      <ul class="clean">
+        <li><b>오픈런이 전부.</b> 동키콩은 개장 직후 대기 0분이지만 30분만 늦어도 100분 이상.</li>
+        <li><b>무료 정리권:</b> 입장 후 USJ 앱에서 닌텐도 월드 시간지정 입장권 신청. 일행은 함께 등록해야 시간이 안 갈립니다.</li>
+        <li><b>싱글라이더:</b> 혼자 타도 괜찮다면 별도 줄 이용 (운영 여부는 당일 앱 확인).</li>
+        <li><b>점심은 11시 30분 전에</b>, 인기 기구는 폐장 1시간 전 재도전.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="pill r">B · 시간형</span>
+      <h2 style="margin-top:8px">익스프레스 패스 구매</h2>
+      <table>
+        <tr><th>패스</th><th>특징</th></tr>
+        <tr><td>익스프레스 4</td><td>4개 어트랙션, 닌텐도 중심 구성</td></tr>
+        <tr><td>익스프레스 7</td><td>닌텐도 월드 + 해리포터 구역 입장 포함, 첫 방문 인기</td></tr>
+        <tr><td>익스프레스 8</td><td>동키콩·마리오카트·미니언까지 가장 넓은 구성</td></tr>
+      </table>
+      <div class="tip">상품명에 <b>Super Nintendo World Area Timed Entry</b>가 있는지 꼭 확인! 모든 익스프레스가 닌텐도 월드 입장을 포함하지는 않고, 입장권도 따로 필요합니다.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CHECK -->
+<section class="pane" id="check">
+  <div class="card chk">
+    <h2>출발 전 체크리스트</h2>
+    <div id="chkList"></div>
+  </div>
+</section>
+
+</main>
+<footer>
+  정보는 2026년 10월 기준이며 가격·운영은 날짜별로 바뀔 수 있습니다. 최종 확인은 <a href="https://www.usj.co.jp/web/ko/kr/" target="_blank" rel="noopener">USJ 공식 사이트</a>에서.<br>다인에듀 · 후안샘
+</footer>
+
+<script>
+const AREAS = {
+  entrance:{name:"입구",x:230,y:452,w:90,h:26,c:"#555"},
+  hollywood:{name:"할리우드",x:110,y:400,w:230,h:44,c:"#c2185b"},
+  snw:{name:"슈퍼 닌텐도 월드",x:12,y:215,w:96,h:108,c:"#e2231a"},
+  hp:{name:"해리포터",x:55,y:22,w:125,h:88,c:"#5d4037"},
+  jurassic:{name:"쥬라기 공원",x:192,y:22,w:120,h:92,c:"#2e7d32"},
+  amity:{name:"애미티",x:40,y:120,w:80,h:42,c:"#00838f"},
+  waterworld:{name:"워터월드",x:14,y:168,w:96,h:40,c:"#0277bd"},
+  sf:{name:"샌프란시스코",x:300,y:128,w:88,h:72,c:"#6d4c41"},
+  ny:{name:"뉴욕",x:300,y:208,w:88,h:96,c:"#455a64"},
+  minion:{name:"미니언 파크",x:300,y:312,w:88,h:82,c:"#f9a825"},
+  wonder:{name:"원더랜드",x:16,y:332,w:88,h:62,c:"#8e24aa"}
+};
+const STEPS = [
+  {ph:"오전",time:"개장 60분 전",area:"entrance",title:"게이트 도착",desc:"앱에 입장권을 미리 등록해 두고 줄을 섭니다. 실제 개장은 공지 시각보다 이른 날이 많습니다.",tip:"보조배터리 필수. 정리권·대기시간 확인이 모두 앱으로 이뤄집니다."},
+  {ph:"오전",time:"개장 직후",area:"snw",title:"동키콩 마인카트 매드니스",desc:"입장하자마자 닌텐도 월드로 직행해 가장 먼저 탑승합니다.",tip:"30분만 늦어도 대기가 100분 이상으로 뜁니다. 이 단계가 하루를 좌우해요."},
+  {ph:"오전",time:"~9:00",area:"snw",title:"마리오카트: 쿠파의 도전장",desc:"동키콩을 내리면 바로 마리오카트로 이동합니다.",tip:"파워업 밴드가 있으면 탑승 후 점수 기록·미니게임도 즐길 수 있습니다."},
+  {ph:"오전",time:"~9:30",area:"snw",title:"요시 어드벤처 + 정리권 확인",desc:"느린 라이드지만 닌텐도 월드 전경을 높은 곳에서 볼 수 있습니다. 나오기 전에 저녁 재입장용 정리권이 남았는지 앱으로 확인하세요.",tip:"닌텐도 월드는 저녁 조명이 훨씬 예쁩니다. 저녁 시간대 정리권을 노려보세요."},
+  {ph:"낮",time:"~10:00",area:"hp",title:"해리포터 포비든 저니",desc:"닌텐도 월드를 나와 해리포터 구역으로 이동합니다. 마을 구경과 버터비어도 함께.",tip:"혼잡한 날은 해리포터 구역도 시간지정 입장이 걸릴 수 있으니 앱을 확인하세요."},
+  {ph:"낮",time:"~11:00",area:"jurassic",title:"플라잉 다이노소어",desc:"해리포터 옆 쥬라기 공원으로 이어서 이동합니다.",tip:"스릴 기구라 대기가 길면 싱글라이더 운영 여부를 확인하세요."},
+  {ph:"낮",time:"11:30",area:"sf",title:"이른 점심",desc:"12~13시 식당 피크를 피해 먼저 식사합니다.",tip:"점심을 일찍 먹으면 다들 식사하는 시간에 오후 기구 대기가 짧아집니다."},
+  {ph:"낮",time:"오후",area:"minion",title:"미니언 파크",desc:"미니언 메이헴 탑승, 포토존과 간식.",tip:"오후에는 앱으로 실시간 대기시간을 보며 짧은 곳부터 공략하세요."},
+  {ph:"낮",time:"오후",area:"hollywood",title:"할리우드 구역",desc:"할리우드 드림 등 입구 쪽 구역은 오후에 몰아서 탑니다.",tip:"퍼레이드·쇼 시간은 당일 앱에서 확인하세요."},
+  {ph:"저녁",time:"정리권 시간",area:"snw",title:"닌텐도 월드 재입장",desc:"야경 속 닌텐도 월드 산책, 기념품 쇼핑, 파워업 밴드 게임.",tip:"정리권 시간에 거의 맞춰 가야 입장됩니다."},
+  {ph:"저녁",time:"폐장 전",area:"jurassic",title:"인기 기구 재도전",desc:"폐장 1시간 전쯤 대기가 줄어든 인기 기구를 다시 탑니다.",tip:"폐장 직전 줄에 서도 대부분 탑승할 수 있지만 운영 공지를 확인하세요."},
+  {ph:"저녁",time:"폐장",area:"entrance",title:"퇴장",desc:"출구 앞 기념품 숍은 폐장 직후 붐비니 미리 사두면 편합니다.",tip:"수고하셨습니다! 🎉"}
+];
+const CHECK = [
+  "공식 USJ 앱 설치 + 입장권 등록",
+  "입장권은 날짜 확정 즉시 온라인 구매",
+  "익스프레스 구매 시 닌텐도 월드 입장 포함 여부 확인",
+  "보조배터리 (완충) + 충전 케이블",
+  "일행 모두 앱 정리권을 한 번에 신청할 준비",
+  "편한 운동화 (오픈런)",
+  "파워업 밴드 (선택)",
+  "파크 앞 호텔 또는 이른 첫차 시간 확인",
+  "우비·작은 가방 (물에 젖는 기구 대비)"
+];
+
+const store = {
+  get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+let cur = store.get("usj_cur",0);
+let done = store.get("usj_done",[]);
+if(cur>=STEPS.length) cur=0;
+
+const NS="http://www.w3.org/2000/svg";
+const areasG=document.getElementById("areas");
+const center=a=>({x:a.x+a.w/2,y:a.y+a.h/2});
+Object.entries(AREAS).forEach(([id,a])=>{
+  const g=document.createElementNS(NS,"g");g.setAttribute("class","area");g.dataset.id=id;
+  const r=document.createElementNS(NS,"rect");
+  r.setAttribute("x",a.x);r.setAttribute("y",a.y);r.setAttribute("width",a.w);r.setAttribute("height",a.h);
+  r.setAttribute("rx",12);r.setAttribute("fill",a.c);
+  const t=document.createElementNS(NS,"text");
+  const c=center(a);t.setAttribute("x",c.x);t.setAttribute("y",c.y+4);
+  if(a.name.length>7 && a.w<110){ // wrap
+    const parts=a.name.split(" ");
+    if(parts.length>1){
+      t.setAttribute("y",c.y-3);
+      parts.forEach((p,i)=>{const s=document.createElementNS(NS,"tspan");s.setAttribute("x",c.x);if(i)s.setAttribute("dy","14");s.textContent=p;t.appendChild(s)});
+    } else t.textContent=a.name;
+  } else t.textContent=a.name;
+  g.appendChild(r);g.appendChild(t);
+  g.addEventListener("click",()=>{
+    const after=STEPS.findIndex((s,i)=>i>=cur && s.area===id);
+    const any=after>=0?after:STEPS.findIndex(s=>s.area===id);
+    if(any>=0){cur=any;render();}
+  });
+  areasG.appendChild(g);
+});
+
+function render(){
+  const s=STEPS[cur];
+  document.getElementById("nowN").textContent=cur+1;
+  document.getElementById("nowTime").textContent=s.ph+" · "+s.time;
+  document.getElementById("nowTitle").textContent=s.title;
+  document.getElementById("nowArea").textContent="📍 "+AREAS[s.area].name;
+  document.getElementById("nowDesc").textContent=s.desc;
+  document.getElementById("nowTip").textContent="💡 "+s.tip;
+  document.getElementById("prevB").disabled=cur===0;
+  document.getElementById("nextB").disabled=cur===STEPS.length-1;
+  const isDone=done.includes(cur);
+  const db=document.getElementById("doneB");
+  db.textContent=isDone?"↺ 완료 취소":"✓ 완료하고 다음";
+  // map
+  document.querySelectorAll(".area").forEach(g=>{
+    g.classList.toggle("hit",g.dataset.id===s.area);
+    g.classList.toggle("dim",g.dataset.id!==s.area);
+  });
+  const pts=[];
+  for(let i=0;i<=cur;i++){
+    const c=center(AREAS[STEPS[i].area]);
+    const off=(i%3-1)*6; // small offset for repeated area visits
+    const p={x:c.x+off,y:c.y+12+off/2};
+    const last=pts[pts.length-1];
+    if(!last||last.x!==p.x||last.y!==p.y) pts.push(p);
+  }
+  let d="";
+  pts.forEach((p,i)=>{
+    if(i===0){d+=`M${p.x},${p.y}`;return}
+    const q=pts[i-1];
+    const mx=(q.x+p.x)/2, my=(q.y+p.y)/2;
+    const cx=mx+(205-mx)*0.35, cy=my+(240-my)*0.35; // curve around lagoon
+    d+=` Q${cx},${cy} ${p.x},${p.y}`;
+  });
+  document.getElementById("routeLine").setAttribute("d",d);
+  const lp=pts[pts.length-1];
+  document.getElementById("pinG").setAttribute("transform",`translate(${lp.x},${lp.y})`);
+  // list
+  const ol=document.getElementById("steps");ol.innerHTML="";
+  let ph="";
+  STEPS.forEach((st,i)=>{
+    if(st.ph!==ph){ph=st.ph;const h=document.createElement("div");h.className="phase";h.textContent=ph;ol.appendChild(h);}
+    const li=document.createElement("li");
+    if(i===cur)li.classList.add("cur");
+    if(done.includes(i))li.classList.add("done");
+    li.innerHTML=`<span class="n">${done.includes(i)?"✓":i+1}</span><span class="t"></span><span class="tm"></span>`;
+    li.querySelector(".t").textContent=st.title;
+    li.querySelector(".tm").textContent=st.time;
+    li.onclick=()=>{cur=i;render();if(window.innerWidth<880)document.getElementById("map").scrollIntoView({behavior:"smooth",block:"start"})};
+    ol.appendChild(li);
+  });
+  const pct=Math.round(done.length/STEPS.length*100);
+  document.getElementById("prog").style.width=pct+"%";
+  document.getElementById("progT").textContent=`${done.length} / ${STEPS.length} 완료 (${pct}%)`;
+  store.set("usj_cur",cur);store.set("usj_done",done);
+}
+document.getElementById("prevB").onclick=()=>{if(cur>0){cur--;render()}};
+document.getElementById("nextB").onclick=()=>{if(cur<STEPS.length-1){cur++;render()}};
+document.getElementById("doneB").onclick=()=>{
+  if(done.includes(cur)){done=done.filter(x=>x!==cur)}
+  else{done.push(cur);if(cur<STEPS.length-1)cur++}
+  render();
+};
+document.getElementById("resetB").onclick=()=>{if(confirm("진행 상황을 초기화할까요?")){done=[];cur=0;render()}};
+
+// tabs
+document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("nav.tabs button").forEach(x=>x.classList.toggle("on",x===b));
+  document.querySelectorAll("section.pane").forEach(p=>p.classList.toggle("on",p.id===b.dataset.tab));
+  store.set("usj_tab",b.dataset.tab);
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+const savedTab=store.get("usj_tab","route");
+const tb=document.querySelector(`nav.tabs button[data-tab="${savedTab}"]`);if(tb)tb.click();
+
+// calc
+const ids=["cPeople","cTicket","cExpress","cFood","cEtc","cRate"];
+const savedCalc=store.get("usj_calc",{});
+ids.forEach(id=>{const el=document.getElementById(id);if(savedCalc[id]!==undefined)el.value=savedCalc[id];el.oninput=calc});
+function calc(){
+  const v=id=>parseFloat(document.getElementById(id).value)||0;
+  const per=v("cTicket")+v("cExpress")+v("cFood")+v("cEtc");
+  const tot=per*Math.max(1,v("cPeople"));
+  document.getElementById("cTotal").innerHTML=`${tot.toLocaleString()}엔 <small>(1인 ${per.toLocaleString()}엔)</small>`;
+  const r=v("cRate");
+  document.getElementById("cKrw").textContent=r?`약 ${Math.round(tot*r/100).toLocaleString()}원 (입력한 환율 기준)`:"환율을 입력하면 원화로도 계산됩니다.";
+  const o={};ids.forEach(id=>o[id]=document.getElementById(id).value);store.set("usj_calc",o);
+}
+calc();
+
+// checklist
+const chk=store.get("usj_chk",[]);
+const cl=document.getElementById("chkList");
+CHECK.forEach((txt,i)=>{
+  const l=document.createElement("label");
+  const cb=document.createElement("input");cb.type="checkbox";cb.checked=chk.includes(i);
+  cb.onchange=()=>{const s=new Set(store.get("usj_chk",[]));cb.checked?s.add(i):s.delete(i);store.set("usj_chk",[...s])};
+  const sp=document.createElement("span");sp.textContent=txt;
+  l.appendChild(cb);l.appendChild(sp);cl.appendChild(l);
+});
+
+render();
+</script>
+</body>
+</html>
