@@ -100,12 +100,57 @@ ul.clean li{margin:4px 0}
 .vs .card{margin:0}
 footer{color:var(--sub);font-size:12px;text-align:center;padding:24px 16px}
 footer a,.card a{color:var(--accent2)}
+/* ---- 주유패스 탭 ---- */
+.seg{display:flex;gap:8px;margin-bottom:12px}
+.seg button{flex:1;min-width:0;text-align:left;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;border-radius:12px;padding:10px 12px;cursor:pointer}
+.seg button b{display:block;font-size:15px}
+.seg button span{font-size:12px;color:var(--sub)}
+.seg button[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.stop{display:grid;grid-template-columns:50px 1fr;gap:10px;margin-bottom:10px}
+.stop .tm{font-weight:800;font-size:13px;text-align:right;padding-top:14px;font-variant-numeric:tabular-nums}
+.stop .bx{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow);min-width:0}
+.stop.pass .bx{border-left:4px solid var(--ok)}
+.stop.opt .bx{border-style:dashed}
+.stop.move .bx{background:transparent;border:0;box-shadow:none;padding:2px 0 0;color:var(--sub);font-size:13px}
+.stop.now .bx{outline:2px solid var(--accent)}
+.stop.done .bx h3{text-decoration:line-through;color:var(--sub)}
+.stop h3{margin:0;font-size:16px;line-height:1.35;display:flex;justify-content:space-between;gap:8px}
+.stop p{margin:4px 0 0;color:var(--sub);font-size:14px}
+.stop .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pill.b{background:color-mix(in srgb,var(--accent2) 16%,transparent);color:var(--ink)}
+.pill.w{background:color-mix(in srgb,#f59e0b 28%,transparent);color:var(--ink)}
+.pill.g2{background:color-mix(in srgb,var(--ok) 20%,transparent);color:var(--ink)}
+.lc{font-size:11px;font-weight:800;color:#fff;border-radius:99px;padding:1px 8px;margin-right:4px}
+.lM{background:#e5171f}.lT{background:#522886}.lC{background:#00903a}.lK{background:#814721}.lW{background:#566070}
+.vis{display:flex;gap:8px;align-items:center;margin-top:8px;font-size:13px;color:var(--sub);cursor:pointer}
+.vis input{width:18px;height:18px;accent-color:var(--ok)}
+.nowb{font-size:11px;background:var(--accent);color:#fff;border-radius:99px;padding:2px 8px;white-space:nowrap;align-self:flex-start}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:6px}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:13px;padding:7px 12px;border-radius:99px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:12px}
+.fgrid .card{margin:0;display:grid;gap:6px;align-content:start;min-width:0}
+.fgrid h3{margin:0;font-size:16px;display:flex;justify-content:space-between;gap:8px}
+.jp{display:block;font-size:12px;color:var(--sub);font-weight:400}
+.star{background:none;border:0;font-size:22px;line-height:1;padding:2px 4px;color:var(--sub);cursor:pointer}
+.star[aria-pressed="true"]{color:var(--accent)}
+.fmeta{display:flex;flex-wrap:wrap;gap:6px}
+.price{font-weight:800;font-variant-numeric:tabular-nums}
+.bprow{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:9px 11px;margin-bottom:6px;background:var(--card);cursor:pointer}
+.bprow input{width:20px;height:20px;accent-color:var(--ok)}
+.bprow small{display:block;color:var(--sub);font-size:12px}
+.bphead{font-size:13px;font-weight:800;color:var(--sub);margin:14px 0 6px}
+#bpRes{position:sticky;bottom:0;border-radius:14px;padding-bottom:max(18px,env(safe-area-inset-bottom,0px))}
+#bpRes input{width:96px;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.tip.warn{background:color-mix(in srgb,#f59e0b 14%,transparent);border-left-color:#f59e0b}
+.tip ul{margin:6px 0 0;padding-left:18px}
+.empty{padding:26px 8px;text-align:center;color:var(--sub)}
 </style>
 </head>
 <body>
 <header class="top">
   <h1>USJ <span>하루 공략</span> 가이드</h1>
-  <p>저렴하게 · 줄은 짧게 · 슈퍼 닌텐도 월드부터 · 2026년 10월 기준</p>
+  <p>저렴하게 · 줄은 짧게 · 슈퍼 닌텐도 월드부터 · 주유패스 2일 코스 포함 · 2026년 10월 기준</p>
 </header>
 
 <nav class="tabs"><div class="in">
@@ -113,6 +158,9 @@ footer a,.card a{color:var(--accent2)}
   <button data-tab="ticket">🎟️ 티켓·예산</button>
   <button data-tab="queue">⏱️ 줄 줄이기</button>
   <button data-tab="check">✅ 준비물</button>
+  <button data-tab="pass">🎫 주유패스 2일</button>
+  <button data-tab="food">🍜 맛집</button>
+  <button data-tab="bp">🧮 본전 계산</button>
 </div></nav>
 
 <main class="wrap">
@@ -244,6 +292,73 @@ footer a,.card a{color:var(--accent2)}
     <h2>출발 전 체크리스트</h2>
     <div id="chkList"></div>
   </div>
+</section>
+
+<!-- PASS -->
+<section class="pane" id="pass">
+  <div class="card">
+    <h2>🎫 오사카 주유패스 2일권 코스</h2>
+    <p class="sub" style="margin:0">¥5,000 · 오사카 메트로·시영버스·오사카시내 사철 무제한 + 약 40곳 무료입장(시설당 1회) · 모바일 QR</p>
+    <div class="fmeta" id="pStats" style="margin-top:10px"></div>
+  </div>
+  <div class="seg" id="pDays">
+    <button data-day="sat" aria-pressed="true"><b>토 10/31</b><span>오사카성 → 신세카이 → 도톤보리</span></button>
+    <button data-day="sun" aria-pressed="false"><b>일 11/1</b><span>우메다 → 오사카 베이</span></button>
+  </div>
+  <div class="card" id="pSummary"></div>
+  <div id="pTimeline"></div>
+  <p class="sub">정가는 주유패스 공식 시설 목록의 참고 요금입니다. 이동 시간은 지하철 기준 대략치이며 환승·대기에 따라 달라집니다. 점선 카드는 선택 일정입니다.</p>
+
+  <div class="card">
+    <h2>주의사항</h2>
+    <div class="tip warn"><b>시간 제한 있는 곳</b><ul>
+      <li>우메다 스카이빌딩 공중정원: 패스 무료입장은 <b>15:00까지</b>. 이후는 10% 할인.</li>
+      <li>고자부네·도톤보리 크루즈: 도착해서 <b>창구에서 지정 시간 탑승권으로 교환</b>해야 합니다. 저녁 시간대는 빨리 마감됩니다.</li>
+      <li>츠텐카쿠 전망대·슬라이더: 현장에서 <b>시간대 예약</b>이 필요하고 혼잡합니다. 도착하면 먼저 예약부터 하세요.</li>
+      <li>산타마리아 데이 크루즈: 11:00~16:00 매시 출발, 출발 15분 전 도착. QR로 바로 승선(교환 불필요).</li>
+    </ul></div>
+    <div class="tip warn"><b>10/31은 할로윈</b><ul>
+      <li>도톤보리와 아메리카무라(산카쿠 공원)는 저녁에 사람이 가장 많습니다. 식당 대기가 길어지니 저녁은 신세카이에서 먼저 먹고, 도톤보리는 크루즈와 구경 위주로 잡았습니다.</li>
+      <li>크루즈 티켓은 도착하자마자 교환하는 편이 안전합니다.</li>
+    </ul></div>
+    <div class="tip"><b>휴관·제외 시설</b><ul>
+      <li>오사카 주거·생활 박물관은 2026.9.1~2027.1.5 임시 휴관이라 제외했습니다.</li>
+      <li>요리미치 선셋 크루즈(하치켄야하마)는 9~10월 금·토 한정이라 10/31이 올해 마지막이지만 이번 코스에서는 시간상 뺐습니다.</li>
+      <li>레고랜드 디스커버리는 이번 주말 패스 무료 날짜가 아니라 할인만 적용됩니다.</li>
+    </ul></div>
+    <div class="tip"><b>패스에 없는 것</b><ul>
+      <li>가이유칸(수족관)과 USJ는 포함되지 않습니다. 캡틴 라인(USJ–텐포잔 배)은 포함입니다.</li>
+      <li>JR 노선은 이용할 수 없습니다. 환승 시 JR 개찰구로 나가지 않도록 주의하세요.</li>
+      <li>산타마리아 일반 요금은 2026.10.1부터 어른 ¥2,000입니다(공식 사이트 안내).</li>
+      <li>2일권은 이용 기간 안에서 시설당 1회입니다. 식당은 현금 결제가 필요한 곳이 있으니 소액 현금을 챙기세요.</li>
+    </ul></div>
+    <h3>참고한 자료</h3>
+    <ul class="clean">
+      <li><a href="https://osaka-amazing-pass.com/en/service_free.html" target="_blank" rel="noopener">주유패스 공식: 무료 시설 목록과 운영시간</a></li>
+      <li><a href="https://www.hey-japan.com/passes/osaka-amazing-pass" target="_blank" rel="noopener">요금표 (1일 ¥3,500 / 2일 ¥5,000)</a></li>
+      <li><a href="https://osaka-info.jp/en/spot/osaka-bay-cruise-santa-maria2022/" target="_blank" rel="noopener">산타마리아 요금(2026.10.1 개정)</a></li>
+      <li><a href="https://tabelog.com/kr/osaka/A2701/" target="_blank" rel="noopener">타베로그 오사카 (점수·예산 확인)</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- FOOD -->
+<section class="pane" id="food">
+  <div class="chips" id="fArea" aria-label="지역"></div>
+  <div class="chips" id="fTier" aria-label="1인 예산"></div>
+  <div class="chips" id="fDay" aria-label="영업 요일"></div>
+  <div class="fgrid" id="fGrid"></div>
+  <p class="sub">평점은 검색 시점에 확인한 타베로그 점수입니다(3.5 이상은 극소수, 3.3 이상이면 상위권). 점수를 확인하지 못한 곳은 수상 이력이나 '명물' 표기로 구분했고, 그 가격은 예상치라고 적었습니다. 방문 전 지도 링크에서 최신 영업시간을 확인하세요.</p>
+</section>
+
+<!-- BREAK-EVEN -->
+<section class="pane" id="bp">
+  <div class="card">
+    <h2>🧮 주유패스 본전 계산</h2>
+    <p class="sub" style="margin:0">갈 곳을 체크하면 정가 합계가 계산됩니다. 일정에 넣은 곳이 기본으로 선택되어 있습니다.</p>
+    <div id="bpList"></div>
+  </div>
+  <div class="card" id="bpRes"></div>
 </section>
 
 </main>
@@ -427,6 +542,233 @@ CHECK.forEach((txt,i)=>{
 });
 
 render();
+
+/* ================= 주유패스 2일 코스 ================= */
+(function(){
+const $=id=>document.getElementById(id);
+const yen=n=>'¥'+Number(n).toLocaleString('en-US');
+const mapUrl=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+const PLAN={
+  sat:[
+    {id:'goza',t:'10:00',dur:45,kind:'pass',title:'오사카성 고자부네 (황금 배)',fee:1800,sub:'해자 안쪽을 도는 약 20분 크루즈. 개장(10:00)에 맞춰 창구에서 탑승 시간으로 교환.',hours:'10:00–16:30',q:'大阪城御座船 乗り場',notes:['출발 10분 전 승선장 도착','매진되면 천수각을 먼저']},
+    {id:'castle',t:'10:50',dur:90,kind:'pass',title:'오사카성 천수각 (뮤지엄)',fee:1200,sub:'천수각과 도요토미 석벽 박물관 입장 포함. 마지막 입장 17:30.',hours:'9:00–18:00',q:'大阪城天守閣'},
+    {id:'lunchc',t:'12:30',dur:60,kind:'meal',title:'점심: 오사카성',area:'castle',sub:'공원 안 JO-TERRACE나 다니마치욘초메 쪽 식당.'},
+    {id:'yagura',t:'13:40',dur:45,kind:'pass',title:'망루 특별개방 + 니시노마루 정원',fee:900,sub:'9/5–11/29 주말 한정 특별개방(다몬·센간 망루). 정원 입장 포함.',hours:'망루 10:00–16:30(입장 16:00)',q:'大阪城 西の丸庭園',notes:['정원 마지막 입장 16:30']},
+    {id:'mvs',t:'14:30',kind:'move',line:['T'],text:'타니마치욘초메(T23) → 텐노지(T27) 타니마치선, 동물원까지 도보 포함',min:'약 25분'},
+    {id:'zoo',t:'15:00',dur:60,kind:'pass',title:'텐노지 동물원',fee:800,sub:'오사카 시내 한복판 동물원. 마지막 입장 16:00이라 먼저 방문.',hours:'9:30–17:00',q:'天王寺動物園',notes:['마지막 입장 16:00']},
+    {id:'keitaku',t:'16:05',dur:30,kind:'pass',title:'게이타쿠엔 정원',fee:300,sub:'동물원 바로 옆 일본 정원. 17:00 폐장 전에 짧게 산책.',hours:'9:30–17:00',q:'慶沢園'},
+    {id:'tsuten',t:'16:45',dur:45,kind:'pass',title:'츠텐카쿠 전망대',fee:1500,sub:'신세카이 상징 탑. 도착하면 먼저 시간대 예약부터.',hours:'9:00–21:45',q:'通天閣',notes:['가까운 역: 에비스초(K18) 또는 동물원앞(M22)']},
+    {id:'slider',t:'17:30',dur:30,kind:'opt',title:'츠텐카쿠 타워 슬라이더 (선택)',fee:1100,sub:'탑 안 미끄럼틀. 신장 120cm 이상, 체중 120kg 미만, 7~65세. 헬멧 착용.',hours:'9:30–20:30',q:'通天閣 タワースライダー',notes:['날씨에 따라 중단','시간대 예약 필요']},
+    {id:'dinner1',t:'18:10',dur:80,kind:'meal',title:'저녁: 신세카이',area:'shinsekai',sub:'쿠시카츠(꼬치튀김) 본고장. 소스 2번 찍기 금지.'},
+    {id:'mvn',t:'19:30',kind:'move',line:['M'],text:'동물원앞(M22) → 난바(M20) 미도스지선',min:'약 10분'},
+    {id:'tombori',t:'19:45',dur:35,kind:'pass',title:'도톤보리 리버 크루즈',fee:2000,sub:'글리코 간판 앞에서 사진 촬영 정차. 도착하자마자 창구에서 탑승권 교환.',hours:'11:00–21:00 (30분 간격)',q:'とんぼりリバークルーズ 乗り場',notes:['할로윈 저녁은 빨리 매진','교환한 시간에만 탑승 가능']},
+    {id:'halloween',t:'20:30',dur:60,kind:'free',title:'도톤보리·아메리카무라 할로윈 구경',sub:'무료 거리 행사. 산카쿠 공원(아메리카무라)까지 도보 약 10분. 타코야키 같은 간식은 여기서. 소지품 주의.',q:'三角公園 アメリカ村'}
+  ],
+  sun:[
+    {id:'umeda',t:'09:30',dur:70,kind:'pass',title:'우메다 스카이빌딩 공중정원 전망대',fee:2000,sub:'173m 야외 전망 데크. 개장(9:30) 직후라 한산합니다.',hours:'9:30–22:30',q:'梅田スカイビル 空中庭園展望台',notes:['패스 무료입장은 15:00까지']},
+    {id:'mvw',t:'10:45',kind:'move',line:['W'],text:'스카이빌딩 → HEP FIVE (지하 통로로 비 안 맞고 이동 가능)',min:'도보 약 15분'},
+    {id:'hep',t:'11:00',dur:30,kind:'pass',title:'HEP FIVE 관람차',fee:1000,sub:'우메다 시내 한가운데 빨간 관람차. 11:00 개장에 맞춰 탑승.',hours:'11:00–23:00',q:'HEP FIVE 観覧車'},
+    {id:'lunch2',t:'11:45',dur:75,kind:'meal',title:'점심: 우메다',area:'umeda',sub:'오후 베이 일정 전에 우메다에서 식사.'},
+    {id:'mv3',t:'13:00',kind:'move',line:['M','C'],text:'우메다(M16) → 혼마치(M18) 환승 → 오사카코(C11)',min:'약 30분'},
+    {id:'walk',t:'13:40',dur:60,kind:'free',title:'텐포잔 마켓플레이스 산책',sub:'산타마리아 승선 전 여유 시간. 가이유칸 수족관은 패스에 포함되지 않습니다(별도 입장).',q:'天保山マーケットプレース'},
+    {id:'santa',t:'14:45',dur:60,kind:'pass',title:'산타마리아 데이 크루즈',fee:2000,sub:'범선형 관광선으로 오사카 베이 약 45분. 15:00 출발 편, 14:45까지 승선장 도착하면 QR로 바로 승선.',hours:'11:00–16:00 매시 출발',q:'帆船型観光船 サンタマリア 大阪港',notes:['16:00이 마지막 출발','출발 15분 전 도착']},
+    {id:'harbor',t:'15:55',dur:45,kind:'free',title:'항구 산책·간식 (일몰 대기)',sub:'해 질 무렵 관람차를 타려고 비워 둔 시간. 카페나 기념품 가게.',q:'天保山ハーバービレッジ'},
+    {id:'tempozan',t:'16:40',dur:30,kind:'pass',title:'덴포잔 대관람차',fee:1000,sub:'일몰(약 17:05, 예상) 무렵 탑승해 낮과 야경을 모두 봄. 일요일은 22:00까지 운행.',hours:'10:00–22:00',q:'天保山大観覧車'},
+    {id:'dinner2',t:'17:30',dur:80,kind:'meal',title:'저녁: 텐포잔',area:'bay',sub:'텐포잔 마켓플레이스 식당가, 또는 난바로 돌아와 식사.'}
+  ]
+};
+const DAYNAME={sat:'토 10/31',sun:'일 11/1'};
+const AREAS_F=[['all','전체'],['umeda','우메다'],['castle','오사카성'],['namba','난바·도톤보리'],['shinsekai','신세카이·텐노지'],['bay','오사카 베이']];
+const FOODS=[
+  {id:'daruma',n:'쿠시카츠 다루마 신세카이 총본점',jp:'元祖串かつ だるま 新世界総本店',a:'shinsekai',dish:'총본점 세트(쿠시카츠+도테야키), 단품 쿠시카츠',price:'1인 ¥2,000–2,999 (1꼬치 ¥143~)',mid:2500,r:{k:'tab',v:'3.45'},closed:[],hrs:'토·일 10:30–22:30',tag:['줄 서는 명물','2번 찍기 금지']},
+  {id:'maruyoshi',n:'그릴 마루요시',jp:'グリルマルヨシ',a:'shinsekai',dish:'롤 캐비지 ¥1,680, 오므라이스 ¥1,000',price:'1인 ¥1,000–2,000',mid:1700,r:{k:'award',v:'빕 구르망 2015·2016'},closed:[2],hrs:'토·일 11:00–15:00, 16:30–21:30',tag:['1946년 창업 양식당','텐노지역 비아 아베노 워크']},
+  {id:'yaekatsu',n:'야에카츠',jp:'八重勝',a:'shinsekai',dish:'카운터 쿠시카츠 (세트 없음, 단품 주문)',price:'1인 약 ¥2,000–3,000 (예상)',mid:2500,r:{k:'icon',v:'현지 줄서는 집'},closed:null,hrs:'휴무·시간 확인',tag:['잔잔요코초 안쪽','가격 예상']},
+  {id:'jterrace',n:'JO-TERRACE OSAKA 식당가',jp:'JO-TERRACE OSAKA',a:'castle',dish:'파스타·피자·라멘·BBQ 등 20여 곳',price:'1인 약 ¥1,200–2,500 (예상)',mid:1800,r:{k:'icon',v:'오사카성공원역 직결'},closed:[],hrs:'가게별 상이 (시설 7:00–24:00)',tag:['성 바로 옆','메뉴 다양','가격 예상']},
+  {id:'macauda',n:'마카우다',jp:'Macauda',a:'castle',dish:'남이탈리아 향토 요리 (22석, 예약 권장)',price:'점심 1인 약 ¥2,000–3,000 (예상)',mid:2500,r:{k:'award',v:'미쉐린 빕 구르망 2026'},closed:null,hrs:'휴무 확인',tag:['다니마치욘초메역 근처','가격 예상']},
+  {id:'epais',n:'epais (에페)',jp:'epais 北新地',a:'umeda',dish:'브랜드 돈카츠 (점심이 가성비)',price:'점심 ¥2,000–2,999 / 저녁 ¥5,000–5,999',mid:2500,r:{k:'award',v:'타베로그 돈카츠 백명점 2026'},closed:[0],hrs:'일요일·공휴일 휴무',tag:['토요일만 가능','기타신치']},
+  {id:'tentomi',n:'기타신치 텐토미',jp:'北新地 天冨良',a:'umeda',dish:'점심 텐동 (특천동 9종)',price:'점심 1인 약 ¥2,000–3,000 (예상)',mid:2500,r:{k:'award',v:'타베로그 텐푸라 백명점'},closed:null,hrs:'휴무 확인',tag:['JR 기타신치역 근처','가격 예상']},
+  {id:'hanadako',n:'하나다코 (우메다)',jp:'はなだこ 梅田',a:'umeda',dish:'타코야키 (건어물 듬뿍)',price:'¥450–600',mid:600,r:{k:'icon',v:'우메다 역 앞 명물'},closed:[],hrs:'점포 확인',tag:['간식','서서 먹기']},
+  {id:'sumiyaki',n:'야키토리 스미야키 0식 우메다점',jp:'焼鳥 炭火 0式 梅田',a:'umeda',dish:'숯불 닭꼬치, 시장 직송 생선',price:'1인 ¥4,000–4,999',mid:4500,r:{k:'tab',v:'3.41',c:322},closed:[],hrs:'점포 확인',tag:['이자카야','저녁 위주']},
+  {id:'gori',n:'야키니쿠 고리짱 우메다 본점',jp:'黒毛和牛 ゴリちゃん 梅田本店',a:'umeda',dish:'A5 흑모와규 야키니쿠, 내장구이',price:'1인 ¥5,000–5,999',mid:5500,r:{k:'tab',v:'3.44',c:337},closed:[],hrs:'아침 7시까지 영업',tag:['나카자키초','늦게까지']},
+  {id:'miyagawa',n:'우메다 스시 개별룸 미야가와',jp:'梅田 鮨 個室 宮川',a:'umeda',dish:'스시 코스',price:'점심 ¥3,000–3,999 / 저녁 ¥8,000–9,999',mid:3500,r:{k:'tab',v:'3.40',c:408},closed:null,hrs:'휴무 확인',tag:['예약 권장','개별룸']},
+  {id:'wanaka',n:'타코야키 도라쿠 와나카 (난바·센니치마에)',jp:'たこ焼道楽 わなか',a:'namba',dish:'타코야키 8개, 오오이리 모둠',price:'8개 약 ¥650–700',mid:700,r:{k:'icon',v:'난바 대표 타코야키'},closed:[],hrs:'센니치마에 토·일 9:30–21:00',tag:['겉바속촉','테이크아웃']},
+  {id:'kukuru',n:'타코야 도톤보리 쿠쿠루 본점',jp:'たこ家 道頓堀 くくる 本店',a:'namba',dish:'큰 문어 타코야키',price:'8개 ¥960',mid:960,r:{k:'icon',v:'도톤보리 명물'},closed:[],hrs:'10:00–22:00 (L.O. 21:30)',tag:['줄 있음']},
+  {id:'mizuno',n:'오코노미야키 미즈노',jp:'お好み焼 美津の',a:'namba',dish:'야마이모야키, 미즈노야키',price:'점심 ¥1,500~ / 저녁 ¥2,000~',mid:2000,r:{k:'award',v:'미쉐린 빕 구르망 6년 연속'},closed:[4],hrs:'11:00–22:00 (L.O. 21:00)',tag:['1945년 창업','할로윈 대기 길 수 있음']},
+  {id:'kuredoru',n:'쿠레오오루 도톤보리점',jp:'くれおーる 道頓堀店',a:'namba',dish:'타코야키·오코노미야키·쿠시카츠',price:'1인 ¥1,000–1,999',mid:1500,r:{k:'tab',v:'3.35',c:582},closed:[],hrs:'점포 확인',tag:['줄 서는 가게']},
+  {id:'jiyuken',n:'자유헌 난바 본점',jp:'自由軒 難波本店',a:'namba',dish:'명물 카레 (밥·루 섞고 생달걀)',price:'카레 ¥750–800',mid:800,r:{k:'icon',v:'1910년 창업 노포'},closed:[1],hrs:'11:30–21:00',tag:['혼밥 가능','오다 사쿠노스케가 즐긴 맛']},
+  {id:'ichiran',n:'이치란 도톤보리',jp:'一蘭 道頓堀店',a:'namba',dish:'돈코츠 라멘 (개별 부스)',price:'¥980–1,200',mid:1100,r:{k:'icon',v:'24시간 영업'},closed:[],hrs:'24시간',tag:['늦은 밤 OK']},
+  {id:'horai',n:'551 호라이 혼텐 (돼지만)',jp:'551蓬莱 本店',a:'namba',dish:'부타만 1개 약 ¥230~, 육단자 정식',price:'테이크아웃 ¥230~ / 정식 약 ¥1,000–2,000 (예상)',mid:460,r:{k:'icon',v:'오사카 대표 간식'},closed:[],hrs:'난바 본점 확인',tag:['난바역 도보 1분','기념품']},
+  {id:'newbabe',n:'뉴 베이브 난바·도톤보리점',jp:'ニューベイブ 難波・道頓堀店',a:'namba',dish:'브랜드 돼지 돈카츠',price:'1인 ¥3,000–3,999',mid:3500,r:{k:'award',v:'백명점 돈카츠 자매점'},closed:[2],hrs:'화요일 휴무',tag:['닛폰바시역 230m']},
+  {id:'mitsuru',n:'쿠로게 와규 잇토가이 야키니쿠 미츠루',jp:'黒毛和牛 一頭買い 焼肉 道頓堀 みつる',a:'namba',dish:'흑모와규 한 마리 매입 야키니쿠',price:'1인 ¥4,000–4,999',mid:4500,r:{k:'tab',v:'3.40',c:619},closed:[],hrs:'점포 확인',tag:['난바역 14번 출구 5분','예약 권장']},
+  {id:'tempozan',n:'텐포잔 마켓플레이스 식당가',jp:'天保山マーケットプレース なにわ食いしんぼ横丁',a:'bay',dish:'오코노미야키·타코야키·라멘 등 오사카 음식',price:'1인 약 ¥1,000–2,000 (예상)',mid:1500,r:{k:'icon',v:'관람차 바로 앞'},closed:[],hrs:'점포 확인',tag:['일정 동선 최적','가격 예상']}
+];
+const TIERS=[['all','전체 예산'],['1','~¥1,500'],['2','~¥3,000'],['3','~¥6,000'],['4','¥6,000+']];
+const tierOf=m=>m<=1500?'1':m<=3000?'2':m<=6000?'3':'4';
+const FAC=[
+  {g:'우메다',id:'umeda',n:'우메다 스카이빌딩 공중정원',fee:2000,note:'15:00까지'},
+  {g:'우메다',id:'hep',n:'HEP FIVE 관람차',fee:1000},
+  {g:'우메다',id:'kinutani',n:'기누타니 고지 천공 미술관',fee:1300,note:'화요일 휴관'},
+  {g:'오사카성',id:'goza',n:'오사카성 고자부네',fee:1800,note:'교환 필요'},
+  {g:'오사카성',id:'castle',n:'오사카성 천수각(뮤지엄)',fee:1200},
+  {g:'오사카성',id:'yagura',n:'망루 특별개방 (니시노마루 정원 포함)',fee:900,note:'주말 한정'},
+  {g:'오사카성',id:'history',n:'오사카 역사박물관',fee:600,note:'화요일 휴관'},
+  {g:'오사카성',id:'miraiza',n:'카이요도 피규어 뮤지엄',fee:1000},
+  {g:'오사카성',id:'aqua',n:'아쿠아 라이너 (수상버스)',fee:2000,note:'10:00–16:00 매시'},
+  {g:'난바·도톤보리',id:'tombori',n:'도톤보리 리버 크루즈',fee:2000,note:'교환 필요'},
+  {g:'난바·도톤보리',id:'wonder',n:'원더 크루즈',fee:2000,note:'16:10~, 예약 우선'},
+  {g:'난바·도톤보리',id:'ukiyoe',n:'가미가타 우키요에 박물관',fee:700,note:'월요일 휴관'},
+  {g:'신세카이·텐노지',id:'tsuten',n:'츠텐카쿠 전망대',fee:1500,note:'시간대 예약'},
+  {g:'신세카이·텐노지',id:'slider',n:'츠텐카쿠 타워 슬라이더',fee:1100,note:'신장·체중 제한'},
+  {g:'신세카이·텐노지',id:'dive',n:'츠텐카쿠 다이브&워크',fee:3000,note:'하네스, 치마·샌들 불가'},
+  {g:'신세카이·텐노지',id:'zoo',n:'텐노지 동물원',fee:800},
+  {g:'신세카이·텐노지',id:'keitaku',n:'게이타쿠엔 정원',fee:300},
+  {g:'신세카이·텐노지',id:'shiten',n:'시텐노지 (중심가람+정원)',fee:800,note:'11/1은 정원 휴원'},
+  {g:'신세카이·텐노지',id:'fineart',n:'오사카시립미술관 상설전',fee:500},
+  {g:'오사카 베이',id:'tempozan',n:'덴포잔 대관람차',fee:1000},
+  {g:'오사카 베이',id:'santa',n:'산타마리아 데이 크루즈',fee:2000,note:'16:00 마지막'},
+  {g:'오사카 베이',id:'captain',n:'캡틴 라인 (USJ–텐포잔 왕복)',fee:1700},
+  {g:'오사카 베이',id:'cosmo',n:'사키시마 코스모 타워 전망대',fee:1200,note:'월요일 휴관'},
+  {g:'기타',id:'museumart',n:'국립국제미술관',fee:430,note:'소장품전만'}
+];
+const CALC_DEFAULT=['umeda','hep','goza','castle','yagura','tombori','tsuten','zoo','keitaku','santa','tempozan'];
+
+/* 일본 시간 기준 오늘 */
+const nowJ=(()=>{const p={};new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date()).forEach(x=>p[x.type]=x.value);return {date:p.year+'-'+p.month+'-'+p.day,min:(parseInt(p.hour,10)%24)*60+parseInt(p.minute,10)}})();
+const mins=t=>{const a=t.split(':');return +a[0]*60+ +a[1]};
+let curDay=nowJ.date==='2026-11-01'?'sun':'sat';
+let visited=store.get('pass_visited',{}), favs=store.get('pass_fav',{});
+const isLive=d=>nowJ.date===(d==='sat'?'2026-10-31':'2026-11-01');
+function nextId(d){
+  const list=PLAN[d].filter(s=>s.kind!=='move'&&s.kind!=='opt');
+  if(!isLive(d))return list[0].id;
+  for(const s of list){if(mins(s.t)+(s.dur||30)>nowJ.min)return s.id}
+  return null;
+}
+const coreAll=()=>PLAN.sat.concat(PLAN.sun).filter(s=>s.kind==='pass');
+
+function stopHtml(s,nid){
+  let cls='stop '+(s.kind==='pass'?'pass':s.kind==='opt'?'opt':s.kind==='move'?'move':'');
+  if(visited[s.id])cls+=' done';
+  if(s.id===nid)cls+=' now';
+  let h='<div class="'+cls+'"><div class="tm">'+s.t+'</div><div class="bx">';
+  if(s.kind==='move'){
+    return h+s.line.map(k=>'<span class="lc l'+k+'">'+(k==='W'?'도보':k)+'</span>').join('')+esc(s.text)+' · '+s.min+'</div></div>';
+  }
+  h+='<h3><span>'+esc(s.title)+'</span>'+(s.id===nid?'<span class="nowb">'+(isLive(curDay)?'지금·다음':'먼저')+'</span>':'')+'</h3>';
+  if(s.sub)h+='<p>'+esc(s.sub)+'</p>';
+  const m=[];
+  if(s.fee&&(s.kind==='pass'||s.kind==='opt'))m.push('<span class="pill g2">패스 무료 · 정가 '+yen(s.fee)+'</span>');
+  if(s.hours)m.push('<span class="pill">'+esc(s.hours)+'</span>');
+  if(s.dur)m.push('<span class="pill">약 '+s.dur+'분</span>');
+  (s.notes||[]).forEach(n=>m.push('<span class="pill w">'+esc(n)+'</span>'));
+  if(m.length)h+='<div class="meta">'+m.join('')+'</div>';
+  if(s.kind==='meal')h+='<div class="ctrl" style="margin-top:8px"><button class="btn" data-food="'+s.area+'">이 근처 맛집 보기</button></div>';
+  else if(s.q)h+='<div class="ctrl" style="margin-top:8px"><a class="btn" target="_blank" rel="noopener" href="'+mapUrl(s.q)+'">지도에서 열기</a></div>';
+  if(s.kind==='pass'||s.kind==='opt'||s.kind==='free')h+='<label class="vis"><input type="checkbox" data-visit="'+s.id+'"'+(visited[s.id]?' checked':'')+'> 다녀왔어요</label>';
+  return h+'</div></div>';
+}
+function renderPass(){
+  const nid=nextId(curDay);
+  $('pTimeline').innerHTML=PLAN[curDay].map(s=>stopHtml(s,nid)).join('');
+  document.querySelectorAll('#pDays button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.day===curDay)));
+  const core=PLAN[curDay].filter(s=>s.kind==='pass');
+  const dayFee=core.reduce((a,s)=>a+s.fee,0);
+  const all=coreAll(), allFee=all.reduce((a,s)=>a+s.fee,0), doneFee=all.filter(s=>visited[s.id]).reduce((a,s)=>a+s.fee,0);
+  $('pSummary').innerHTML='<div><b>'+DAYNAME[curDay]+'</b> 패스 시설 '+core.length+'곳 · 정가 합계 <b class="price">'+yen(dayFee)+'</b></div>'+
+    '<div class="progress"><i style="width:'+Math.min(100,Math.round(doneFee/5000*100))+'%"></i></div>'+
+    '<div class="sub">이틀 합계 정가 '+yen(allFee)+' · 다녀온 곳 '+yen(doneFee)+' (패스 ¥5,000 '+(doneFee>=5000?'회수 완료':'까지 '+yen(5000-doneFee))+') · 교통비 절약은 별도</div>';
+  $('pStats').innerHTML='<span class="pill g2">정가 합계 '+yen(allFee)+'</span><span class="pill b">패스 시설 '+all.length+'곳</span><span class="pill w">우메다 스카이 15:00 전</span>';
+}
+$('pDays').addEventListener('click',e=>{const b=e.target.closest('[data-day]');if(b){curDay=b.dataset.day;renderPass()}});
+$('pTimeline').addEventListener('change',e=>{
+  const id=e.target.dataset.visit;if(!id)return;
+  if(e.target.checked)visited[id]=1;else delete visited[id];
+  store.set('pass_visited',visited);renderPass();
+});
+$('pTimeline').addEventListener('click',e=>{
+  const b=e.target.closest('[data-food]');
+  if(b){fs.area=b.dataset.food;renderFilters();renderFood();document.querySelector('nav.tabs button[data-tab="food"]').click()}
+});
+
+/* ---- 맛집 ---- */
+const fs={area:'all',tier:'all',day:'all',fav:false};
+function chipRow(el,items,key){
+  el.innerHTML=items.map(i=>'<button class="chip" data-k="'+key+'" data-v="'+i[0]+'" aria-pressed="'+(String(fs[key])===String(i[0]))+'">'+i[1]+'</button>').join('');
+}
+function renderFilters(){
+  chipRow($('fArea'),AREAS_F,'area');
+  chipRow($('fTier'),TIERS,'tier');
+  $('fDay').innerHTML=[['all','요일 무관'],['sat','토 영업'],['sun','일 영업']].map(i=>'<button class="chip" data-k="day" data-v="'+i[0]+'" aria-pressed="'+(fs.day===i[0])+'">'+i[1]+'</button>').join('')+
+    '<button class="chip" data-k="fav" data-v="t" aria-pressed="'+fs.fav+'">★ 즐겨찾기만</button>';
+}
+const openFlag=(f,d)=>f.closed===null?'q':(f.closed.indexOf(d)>=0?'x':'o');
+function ratingPill(r){
+  if(r.k==='tab')return '<span class="pill b">타베로그 '+r.v+(r.c?' ('+r.c+'건)':'')+'</span>';
+  if(r.k==='award')return '<span class="pill g2">'+esc(r.v)+'</span>';
+  return '<span class="pill">'+esc(r.v)+'</span>';
+}
+function dayPill(f){
+  const s=openFlag(f,6),u=openFlag(f,0);
+  const lab=(x,n)=>n+(x==='o'?' ○':x==='x'?' 휴무':' ?');
+  return '<span class="pill'+((s==='x'||u==='x')?' w':'')+'">'+lab(s,'토')+' · '+lab(u,'일')+'</span>';
+}
+function renderFood(){
+  const list=FOODS.filter(f=>{
+    if(fs.area!=='all'&&f.a!==fs.area)return false;
+    if(fs.tier!=='all'&&tierOf(f.mid)!==fs.tier)return false;
+    if(fs.day==='sat'&&openFlag(f,6)==='x')return false;
+    if(fs.day==='sun'&&openFlag(f,0)==='x')return false;
+    if(fs.fav&&!favs[f.id])return false;
+    return true;
+  });
+  if(!list.length){$('fGrid').innerHTML='<div class="empty">조건에 맞는 곳이 없어요. 필터를 줄여 보세요.</div>';return}
+  $('fGrid').innerHTML=list.map(f=>
+    '<article class="card"><h3><span>'+esc(f.n)+'<span class="jp">'+esc(f.jp)+'</span></span><button class="star" data-fav="'+f.id+'" aria-pressed="'+(!!favs[f.id])+'" aria-label="즐겨찾기">'+(favs[f.id]?'★':'☆')+'</button></h3>'+
+    '<div>'+esc(f.dish)+'</div><div class="price">'+esc(f.price)+'</div>'+
+    '<div class="fmeta">'+ratingPill(f.r)+dayPill(f)+'<span class="pill">'+esc(f.hrs)+'</span></div>'+
+    '<div class="fmeta">'+f.tag.map(t=>'<span class="pill">'+esc(t)+'</span>').join('')+'</div>'+
+    '<div class="ctrl" style="margin-top:4px"><a class="btn" target="_blank" rel="noopener" href="'+mapUrl(f.jp+' 大阪')+'">지도에서 열기</a></div></article>'
+  ).join('');
+}
+$('food').addEventListener('click',e=>{
+  const c=e.target.closest('.chip');
+  if(c){const k=c.dataset.k;if(k==='fav')fs.fav=!fs.fav;else fs[k]=c.dataset.v;renderFilters();renderFood();return}
+  const s=e.target.closest('[data-fav]');
+  if(s){const id=s.dataset.fav;if(favs[id])delete favs[id];else favs[id]=1;store.set('pass_fav',favs);renderFood()}
+});
+
+/* ---- 본전 계산 ---- */
+let sel=store.get('pass_calc',null)||CALC_DEFAULT.slice();
+let transport=store.get('pass_tr',2000);
+function renderBp(){
+  const groups={},order=[];
+  FAC.forEach(f=>{if(!groups[f.g]){groups[f.g]=[];order.push(f.g)}groups[f.g].push(f)});
+  $('bpList').innerHTML=order.map(g=>'<div class="bphead">'+g+'</div>'+groups[g].map(f=>
+    '<label class="bprow"><input type="checkbox" data-fac="'+f.id+'"'+(sel.indexOf(f.id)>=0?' checked':'')+'><span>'+esc(f.n)+(f.note?'<small>'+esc(f.note)+'</small>':'')+'</span><span class="price">'+yen(f.fee)+'</span></label>'
+  ).join('')).join('');
+  $('bpRes').innerHTML='<div id="bpA"></div><label class="sub" style="display:block;margin:8px 0">지하철·버스 교통비 예상 <input type="number" id="bpTr" min="0" step="100" value="'+transport+'"> 엔 (직접 수정)</label><div id="bpB"></div><div class="progress"><i id="bpBar"></i></div>';
+  $('bpTr').addEventListener('input',e=>{transport=Math.max(0,parseInt(e.target.value,10)||0);store.set('pass_tr',transport);updBp()});
+  updBp();
+}
+function updBp(){
+  const sum=FAC.filter(f=>sel.indexOf(f.id)>=0).reduce((a,f)=>a+f.fee,0);
+  const total=sum+transport,diff=total-5000;
+  $('bpA').innerHTML='선택 '+sel.length+'곳 · 정가 합계 <b class="price">'+yen(sum)+'</b>';
+  $('bpB').innerHTML='정가+교통 <b class="price">'+yen(total)+'</b> − 패스 ¥5,000 = <b class="price" style="color:'+(diff>=0?'var(--ok)':'var(--accent)')+'">'+(diff>=0?'+':'−')+yen(Math.abs(diff))+'</b> '+(diff>=0?'이득':'손해');
+  $('bpBar').style.width=Math.min(100,Math.round(total/5000*100))+'%';
+}
+$('bpList').addEventListener('change',e=>{
+  const id=e.target.dataset.fac;if(!id)return;
+  const i=sel.indexOf(id);
+  if(e.target.checked&&i<0)sel.push(id);
+  if(!e.target.checked&&i>=0)sel.splice(i,1);
+  store.set('pass_calc',sel);updBp();
+});
+
+renderPass();renderFilters();renderFood();renderBp();
+})();
 </script>
 </body>
 </html>
