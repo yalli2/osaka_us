@@ -637,7 +637,7 @@ const CALC_DEFAULT=['umeda','hep','goza','castle','yagura','tombori','tsuten','z
 /* 일본 시간 기준 오늘 */
 const nowJ=(()=>{const p={};new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date()).forEach(x=>p[x.type]=x.value);return {date:p.year+'-'+p.month+'-'+p.day,min:(parseInt(p.hour,10)%24)*60+parseInt(p.minute,10)}})();
 const mins=t=>{const a=t.split(':');return +a[0]*60+ +a[1]};
-let curDay=nowJ.date==='2026-11-01'?'sun':'sat';
+let curDay=(nowJ.date>='2026-11-01'||(nowJ.date==='2026-10-31'&&nowJ.min>=21*60))?'sun':'sat';
 let visited=store.get('pass_visited',{}), favs=store.get('pass_fav',{});
 const isLive=d=>nowJ.date===(d==='sat'?'2026-10-31':'2026-11-01');
 function nextId(d){
